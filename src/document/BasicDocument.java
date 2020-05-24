@@ -36,7 +36,9 @@ public class BasicDocument extends Document
 	{
 		//TODO: Implement this method in week 2 according to the comments above.  
 		// See the Module 2 support videos if you need help.
-	    return 0;
+		List<String> myWordList = this.getTokens("[a-z|A-Z]+");
+		
+	    return myWordList.size();
 	}
 	
 	/**
@@ -56,7 +58,12 @@ public class BasicDocument extends Document
 	{
 	    //TODO: Implement this method.  See the Module 2 support videos 
         // if you need help.
-        return 0;
+		
+		//List<String> mySentenceList = this.getTokens("[^.|!|?]+");
+		// The regular expression indicates that NOT ANY CHARACTER IN THE SET
+		List<String> mySentenceList = this.getTokens("[^.!?]+");
+		
+        return mySentenceList.size();
 	}
 	
 	/**

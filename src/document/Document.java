@@ -32,7 +32,9 @@ public abstract class Document {
 	protected List<String> getTokens(String pattern)
 	{
 		ArrayList<String> tokens = new ArrayList<String>();
+		
 		Pattern tokSplitter = Pattern.compile(pattern);
+		
 		Matcher m = tokSplitter.matcher(text);
 		
 		while (m.find()) {
