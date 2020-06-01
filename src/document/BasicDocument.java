@@ -110,14 +110,14 @@ public class BasicDocument extends Document
 		 * in the string, respectively.  You can use these examples to help clarify 
 		 * your understanding of how to count syllables, words, and sentences.
 		 */
-//		testCase(new BasicDocument("are"), 2, 1, 1);
+//		testCase(new BasicDocument("are"), 1, 1, 1);
 //		
 //		testCase(new BasicDocument("Seleeeect"), 2, 1, 1);
 //		
-//		testCase(new BasicDocument("be"), 0, 1, 1);
+//		testCase(new BasicDocument("be"), 1, 1, 1);
 //		
 //		
-//		  testCase(new BasicDocument("circle"), 2, 1, 1);
+//		  testCase(new BasicDocument("circle"), 1, 1, 1);
 //		  
 //		  testCase(new BasicDocument("Senteeeeeeeeeences"), 3, 1, 1);
 //		  
@@ -141,7 +141,8 @@ public class BasicDocument extends Document
 		  "the correct amount of syllables (example, for example), " +
 		  "but most of them will."), 49, 33, 3); 
 		  testCase(new BasicDocument("Segue"),
-		  2, 1, 1); testCase(new BasicDocument("Sentence"), 2, 1, 1); 
+		  2, 1, 1); 
+		  testCase(new BasicDocument("Sentence"), 2, 1, 1); 
 		  testCase(new
 		  BasicDocument("Sentences?!"), 3, 1, 1); 
 		  testCase(new

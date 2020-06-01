@@ -86,7 +86,7 @@ public abstract class Document {
 		//print arrays
         System.out.println("\nModified SyllableIndexArray[] elements:"); 
         for (int j = 0; j <modArray.length; j++) 
-        	 System.out.printf("\nj = %d, modArray[%d] = %c", j, j, modArray[j]); 
+        	 System.out.printf("j = %d, modArray[%d] = %c\n", j, j, modArray[j]); 
         
         //count number of syllables
 		for(int j = 0; j < modArray.length; j++) {
@@ -96,8 +96,8 @@ public abstract class Document {
 		
 		//a lone "e" at the end of a word is not considered a syllable 
 		//unless the word has no other syllables.
-		if(syllableCount == 1 && modArray[modArray.length - 1] == 'e')
-			syllableCount = 0;
+		if(syllableCount > 1 && modArray[modArray.length - 1] == 'e')
+			syllableCount -= 1;
 		
 		System.out.printf("\nSyllable count = %d\n", syllableCount);
 	    return syllableCount;
@@ -107,13 +107,13 @@ public abstract class Document {
 		char[] cWord = word.toCharArray();
 		//declare the array
 		char[] vowelArray = new char[cWord.length];
-		int i = 0, startPos = 0;
+		int startPos = 0;
 		String syllable = "aeiouyAEIOUY";
 		//For each character in the word
 		for (char c : cWord) {
 			//Is it a vowel?
 			int cPos = syllable.indexOf(c);
-			System.out.printf("index position %d in the vowel array\n", cPos);
+			//System.out.printf("index position %d in the vowel array\n", cPos);
 			//If found, initialize the array
 			if(cPos != -1) {
 				//a lone "e" at the end of a word is not considered a syllable 
@@ -123,21 +123,21 @@ public abstract class Document {
 				 * System.out.printf("\nlone e at the end of the word, index = %d", cPos);
 				 * vowelArray[i] = 0; break; }
 				 */
-				System.out.printf("index position %d in the string\n", word.indexOf(c, startPos));
+				//System.out.printf("index position %d in the string\n", word.indexOf(c, startPos));
 				vowelArray[word.indexOf(c, startPos)] = c;
-				System.out.print(vowelArray[word.indexOf(c, startPos)] + " ");
-				i++;
+				//System.out.print(vowelArray[word.indexOf(c, startPos)] + " ");
+				
 				startPos = word.indexOf(c, startPos) + 1;
 			}
 		}
 		
 		//print arrays
-        System.out.println("\nSyllableIndexArray[] elements:"); 
-        System.out.printf("\nSyllableIndexArray[] elements: = %d", vowelArray.length);
-        
-        for (int j = 0; j < vowelArray.length; j++) {
-            System.out.printf("\nj = %d, vowelArray[%d] = %c", j, j, vowelArray[j]); 
-        }
+//        System.out.println("\nSyllableIndexArray[] elements:"); 
+//        System.out.printf("\nSyllableIndexArray[] elements: = %d", vowelArray.length);
+//        
+//        for (int j = 0; j < vowelArray.length; j++) {
+//            System.out.printf("\nj = %d, vowelArray[%d] = %c", j, j, vowelArray[j]); 
+//        }
 		return vowelArray;
 	}
 	
