@@ -69,7 +69,52 @@ public abstract class Document {
 		// TODO: Implement this method so that you can call it from the 
 	    // getNumSyllables method in BasicDocument (module 2) and 
 	    // EfficientDocument (module 3).
-	    return 0;
+		int[] origArray = makeSyllableIndexArray(word);
+		//avoid changing the original array 
+		int[] modArray = new int[origArray.length];
+		for(int i = 0; i < origArray.length; i++)
+			modArray[i] = origArray[i];
+		int i = 0, syllableCount = 0;
+		//if two or more vowels are next to each other, keep the preceding one
+		while(i < origArray.length - 1) {
+			if(origArray[i + 1] - origArray[i] == 1) {
+				modArray[i + 1] = 0;
+			}
+			i++;
+		}
+		for(int j = 0; j < modArray.length; j++) {
+			if(modArray[j] != 0)
+				syllableCount++;
+		}
+	    return syllableCount;
+	}
+	
+	protected int[] makeSyllableIndexArray(String word) {
+		char[] cWord = word.toCharArray();
+		//declare the array
+		int [] mArray = new int[cWord.length];
+		int i = 0, startPos = 0;
+		String syllable = "aeiouyAEIOUY";
+		//For each character in the word
+		for (char c : cWord) {
+			//Is it a vowel?
+			int cPos = syllable.indexOf(c);
+			//System.out.printf("index position %d in the vowel array\n", cPos);
+			//If found, initialize the array
+			if(cPos != -1) {
+				//System.out.printf("index position %d in the string\n", word.indexOf(c, startPos));
+				mArray[i] = word.indexOf(c, startPos);	
+				i++;
+				startPos = word.indexOf(c, startPos) + 1;
+			}
+		}
+		
+		//print arrays
+        System.out.println("\nSyllableIndexArray[] elements:"); 
+        for (int j = 0; j <mArray.length; j++) 
+            System.out.print(mArray[j] + " "); 
+        
+		return mArray;
 	}
 	
 	/** A method for testing
@@ -88,6 +133,9 @@ public abstract class Document {
 		int syllFound = doc.getNumSyllables();
 		int wordsFound = doc.getNumWords();
 		int sentFound = doc.getNumSentences();
+		//
+		//doc.countSyllables("are");
+		
 		if (syllFound != syllables) {
 			System.out.println("\nIncorrect number of syllables.  Found " + syllFound 
 					+ ", expected " + syllables);
