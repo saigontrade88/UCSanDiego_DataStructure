@@ -69,54 +69,63 @@ public abstract class Document {
 		// TODO: Implement this method so that you can call it from the 
 	    // getNumSyllables method in BasicDocument (module 2) and 
 	    // EfficientDocument (module 3).
-		int[] origArray = makeSyllableIndexArray(word);
+		char[] origArray = makeSyllableIndexArray(word);
 		//avoid changing the original array 
-		int[] modArray = new int[origArray.length];
+		char[] modArray = new char[origArray.length];
 		for(int i = 0; i < origArray.length; i++)
 			modArray[i] = origArray[i];
 		int i = 0, syllableCount = 0;
 		//if two or more vowels are next to each other, keep the preceding one
-		while(i < origArray.length - 1) {
-			if(origArray[i + 1] - origArray[i] == 1) {
-				modArray[i + 1] = 0;
-			}
-			i++;
+		while(i < origArray.length - 1) { 
+			  if(origArray[i] != 0 && origArray[i + 1] != 0) {
+				  modArray[i + 1] = 0; 
+			  } 
+			  i++; 
 		}
+		 
 		//print arrays
         System.out.println("\nModified SyllableIndexArray[] elements:"); 
         for (int j = 0; j <modArray.length; j++) 
-            System.out.print(modArray[j] + " "); 
+        	 System.out.printf("\nj = %d, modArray[%d] = %c", j, j, modArray[j]); 
         
+        //count number of syllables
 		for(int j = 0; j < modArray.length; j++) {
 			if(modArray[j] != 0)
 				syllableCount++;
 		}
-		System.out.printf("\nSyllable count = %d", syllableCount);
+		
+		//a lone "e" at the end of a word is not considered a syllable 
+		//unless the word has no other syllables.
+		if(syllableCount == 1 && modArray[modArray.length - 1] == 'e')
+			syllableCount = 0;
+		
+		System.out.printf("\nSyllable count = %d\n", syllableCount);
 	    return syllableCount;
 	}
 	
-	protected int[] makeSyllableIndexArray(String word) {
+	protected char[] makeSyllableIndexArray(String word) {
 		char[] cWord = word.toCharArray();
 		//declare the array
-		int [] mArray = new int[cWord.length];
+		char[] vowelArray = new char[cWord.length];
 		int i = 0, startPos = 0;
 		String syllable = "aeiouyAEIOUY";
 		//For each character in the word
 		for (char c : cWord) {
 			//Is it a vowel?
 			int cPos = syllable.indexOf(c);
-			//System.out.printf("index position %d in the vowel array\n", cPos);
+			System.out.printf("index position %d in the vowel array\n", cPos);
 			//If found, initialize the array
 			if(cPos != -1) {
 				//a lone "e" at the end of a word is not considered a syllable 
 				//unless the word has no other syllables.
-				if(c == 'e' && i == 0) {
-					System.out.printf("\nlone e at the end of the word, index = %d", cPos);
-					mArray[i] = 0;
-					break;
-				}
-				//System.out.printf("index position %d in the string\n", word.indexOf(c, startPos));
-				mArray[i] = word.indexOf(c, startPos) + 1;
+				/*
+				 * if(c == 'e' && i == 0) {
+				 * System.out.printf("\nlone e at the end of the word, index = %d", cPos);
+				 * vowelArray[i] = 0; break; }
+				 */
+				System.out.printf("index position %d in the string\n", word.indexOf(c, startPos));
+				vowelArray[word.indexOf(c, startPos)] = c;
+				System.out.print(vowelArray[word.indexOf(c, startPos)] + " ");
 				i++;
 				startPos = word.indexOf(c, startPos) + 1;
 			}
@@ -124,10 +133,12 @@ public abstract class Document {
 		
 		//print arrays
         System.out.println("\nSyllableIndexArray[] elements:"); 
-        for (int j = 0; j <mArray.length; j++) 
-            System.out.print(mArray[j] + " "); 
+        System.out.printf("\nSyllableIndexArray[] elements: = %d", vowelArray.length);
         
-		return mArray;
+        for (int j = 0; j < vowelArray.length; j++) {
+            System.out.printf("\nj = %d, vowelArray[%d] = %c", j, j, vowelArray[j]); 
+        }
+		return vowelArray;
 	}
 	
 	/** A method for testing
