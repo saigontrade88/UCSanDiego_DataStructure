@@ -82,10 +82,16 @@ public abstract class Document {
 			}
 			i++;
 		}
+		//print arrays
+        System.out.println("\nModified SyllableIndexArray[] elements:"); 
+        for (int j = 0; j <modArray.length; j++) 
+            System.out.print(modArray[j] + " "); 
+        
 		for(int j = 0; j < modArray.length; j++) {
 			if(modArray[j] != 0)
 				syllableCount++;
 		}
+		System.out.printf("\nSyllable count = %d", syllableCount);
 	    return syllableCount;
 	}
 	
@@ -102,8 +108,15 @@ public abstract class Document {
 			//System.out.printf("index position %d in the vowel array\n", cPos);
 			//If found, initialize the array
 			if(cPos != -1) {
+				//a lone "e" at the end of a word is not considered a syllable 
+				//unless the word has no other syllables.
+				if(c == 'e' && i == 0) {
+					System.out.printf("\nlone e at the end of the word, index = %d", cPos);
+					mArray[i] = 0;
+					break;
+				}
 				//System.out.printf("index position %d in the string\n", word.indexOf(c, startPos));
-				mArray[i] = word.indexOf(c, startPos);	
+				mArray[i] = word.indexOf(c, startPos) + 1;
 				i++;
 				startPos = word.indexOf(c, startPos) + 1;
 			}
