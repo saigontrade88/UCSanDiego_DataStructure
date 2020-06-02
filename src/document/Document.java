@@ -84,9 +84,9 @@ public abstract class Document {
 		}
 		 
 		//print arrays
-        System.out.println("\nModified SyllableIndexArray[] elements:"); 
-        for (int j = 0; j <modArray.length; j++) 
-        	 System.out.printf("j = %d, modArray[%d] = %c\n", j, j, modArray[j]); 
+//        System.out.println("\nModified SyllableIndexArray[] elements:"); 
+//        for (int j = 0; j <modArray.length; j++) 
+//        	 System.out.printf("j = %d, modArray[%d] = %c\n", j, j, modArray[j]); 
         
         //count number of syllables
 		for(int j = 0; j < modArray.length; j++) {
@@ -99,7 +99,7 @@ public abstract class Document {
 		if(syllableCount > 1 && modArray[modArray.length - 1] == 'e')
 			syllableCount -= 1;
 		
-		System.out.printf("\nSyllable count = %d\n", syllableCount);
+		//System.out.printf("\nSyllable count = %d\n", syllableCount);
 	    return syllableCount;
 	}
 	
@@ -157,6 +157,7 @@ public abstract class Document {
 		int syllFound = doc.getNumSyllables();
 		int wordsFound = doc.getNumWords();
 		int sentFound = doc.getNumSentences();
+		
 		//
 		//doc.countSyllables("are");
 		
@@ -206,7 +207,17 @@ public abstract class Document {
 	{
 	    // TODO: You will play with this method in week 1, and 
 		// then implement it in week 2
-		return 206.835 - 1.015*(getNumWords()/getNumSentences()) - 84.6*(getNumSyllables()/getNumWords());
+		System.out.println("\nFlesch scores:");
+		double term1 =  ((double)getNumWords()/getNumSentences());
+		double term2 =  ((double)getNumSyllables()/getNumWords());
+		
+		System.out.printf("\nterm1 = :%f", term1);
+		System.out.printf("\nterm2 = :%f", term2);
+		
+		double result = 206.835 - 1.015*term1 - 84.6*term2;
+		System.out.printf("\nresult = %f", result);
+		
+		return result;
 	    
 	}
 	
