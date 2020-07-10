@@ -32,9 +32,7 @@ public abstract class Document {
 	protected List<String> getTokens(String pattern)
 	{
 		ArrayList<String> tokens = new ArrayList<String>();
-		
 		Pattern tokSplitter = Pattern.compile(pattern);
-		
 		Matcher m = tokSplitter.matcher(text);
 		
 		while (m.find()) {
@@ -44,101 +42,32 @@ public abstract class Document {
 		return tokens;
 	}
 	
-	/** This is a helper function that returns the number of syllables
-	 * in a word.  You should write this and use it in your 
-	 * BasicDocument class.
-	 * 
-	 * You will probably NOT need to add a countWords or a countSentences 
-	 * method here.  The reason we put countSyllables here because we'll 
-	 * use it again next week when we implement the EfficientDocument class.
-	 * 
-	 * For reasons of efficiency you should not create Matcher or Pattern 
-	 * objects inside this method. Just use a loop to loop through the 
-	 * characters in the string and write your own logic for counting 
-	 * syllables.
-	 * 
-	 * @param word  The word to count the syllables in
-	 * @return The number of syllables in the given word, according to 
-	 * this rule: Each contiguous sequence of one or more vowels is a syllable, 
-	 *       with the following exception: a lone "e" at the end of a word 
-	 *       is not considered a syllable unless the word has no other syllables. 
-	 *       You should consider y a vowel.
-	 */
-	protected int countSyllables(String word)
+	// This is a helper function that returns the number of syllables
+	// in a word.  You should write this and use it in your 
+	// BasicDocument class.
+	protected static int countSyllables(String word)
 	{
-		// TODO: Implement this method so that you can call it from the 
-	    // getNumSyllables method in BasicDocument (module 2) and 
-	    // EfficientDocument (module 3).
-		char[] origArray = makeSyllableIndexArray(word);
-		//avoid changing the original array 
-		char[] modArray = new char[origArray.length];
-		for(int i = 0; i < origArray.length; i++)
-			modArray[i] = origArray[i];
-		int i = 0, syllableCount = 0;
-		//if two or more vowels are next to each other, keep the preceding one
-		while(i < origArray.length - 1) { 
-			  if(origArray[i] != 0 && origArray[i + 1] != 0) {
-				  modArray[i + 1] = 0; 
-			  } 
-			  i++; 
-		}
-		 
-		//print arrays
-//        System.out.println("\nModified SyllableIndexArray[] elements:"); 
-//        for (int j = 0; j <modArray.length; j++) 
-//        	 System.out.printf("j = %d, modArray[%d] = %c\n", j, j, modArray[j]); 
-        
-        //count number of syllables
-		for(int j = 0; j < modArray.length; j++) {
-			if(modArray[j] != 0)
-				syllableCount++;
-		}
-		
-		//a lone "e" at the end of a word is not considered a syllable 
-		//unless the word has no other syllables.
-		if(syllableCount > 1 && modArray[modArray.length - 1] == 'e')
-			syllableCount -= 1;
-		
-		//System.out.printf("\nSyllable count = %d\n", syllableCount);
-	    return syllableCount;
-	}
-	
-	protected char[] makeSyllableIndexArray(String word) {
-		char[] cWord = word.toCharArray();
-		//declare the array
-		char[] vowelArray = new char[cWord.length];
-		int startPos = 0;
-		String syllable = "aeiouyAEIOUY";
-		//For each character in the word
-		for (char c : cWord) {
-			//Is it a vowel?
-			int cPos = syllable.indexOf(c);
-			//System.out.printf("index position %d in the vowel array\n", cPos);
-			//If found, initialize the array
-			if(cPos != -1) {
-				//a lone "e" at the end of a word is not considered a syllable 
-				//unless the word has no other syllables.
-				/*
-				 * if(c == 'e' && i == 0) {
-				 * System.out.printf("\nlone e at the end of the word, index = %d", cPos);
-				 * vowelArray[i] = 0; break; }
-				 */
-				//System.out.printf("index position %d in the string\n", word.indexOf(c, startPos));
-				vowelArray[word.indexOf(c, startPos)] = c;
-				//System.out.print(vowelArray[word.indexOf(c, startPos)] + " ");
-				
-				startPos = word.indexOf(c, startPos) + 1;
+	    //System.out.print("Counting syllables in " + word + "...");
+		int numSyllables = 0;
+		boolean newSyllable = true;
+		String vowels = "aeiouy";
+		char[] cArray = word.toCharArray();
+		for (int i = 0; i < cArray.length; i++)
+		{
+		    if (i == cArray.length-1 && Character.toLowerCase(cArray[i]) == 'e' 
+		    		&& newSyllable && numSyllables > 0) {
+                numSyllables--;
+            }
+		    if (newSyllable && vowels.indexOf(Character.toLowerCase(cArray[i])) >= 0) {
+				newSyllable = false;
+				numSyllables++;
+			}
+			else if (vowels.indexOf(Character.toLowerCase(cArray[i])) < 0) {
+				newSyllable = true;
 			}
 		}
-		
-		//print arrays
-//        System.out.println("\nSyllableIndexArray[] elements:"); 
-//        System.out.printf("\nSyllableIndexArray[] elements: = %d", vowelArray.length);
-//        
-//        for (int j = 0; j < vowelArray.length; j++) {
-//            System.out.printf("\nj = %d, vowelArray[%d] = %c", j, j, vowelArray[j]); 
-//        }
-		return vowelArray;
+		//System.out.println( "found " + numSyllables);
+		return numSyllables;
 	}
 	
 	/** A method for testing
@@ -157,10 +86,6 @@ public abstract class Document {
 		int syllFound = doc.getNumSyllables();
 		int wordsFound = doc.getNumWords();
 		int sentFound = doc.getNumSentences();
-		
-		//
-		//doc.countSyllables("are");
-		
 		if (syllFound != syllables) {
 			System.out.println("\nIncorrect number of syllables.  Found " + syllFound 
 					+ ", expected " + syllables);
@@ -205,20 +130,10 @@ public abstract class Document {
 	/** return the Flesch readability score of this document */
 	public double getFleschScore()
 	{
-	    // TODO: You will play with this method in week 1, and 
-		// then implement it in week 2
-		System.out.println("\nFlesch scores:");
-		double term1 =  ((double)getNumWords()/getNumSentences());
-		double term2 =  ((double)getNumSyllables()/getNumWords());
-		
-		System.out.printf("\nterm1 = :%f", term1);
-		System.out.printf("\nterm2 = :%f", term2);
-		
-		double result = 206.835 - 1.015*term1 - 84.6*term2;
-		System.out.printf("\nresult = %f", result);
-		
-		return result;
-	    
+		double wordCount = (double)getNumWords();
+		return 206.835 - (1.015 * ((wordCount)/getNumSentences())) 
+				- (84.6 * (((double)getNumSyllables())/wordCount));
+	
 	}
 	
 	
