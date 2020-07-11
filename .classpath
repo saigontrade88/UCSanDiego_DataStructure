@@ -3,17 +3,20 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/richtextfx-fat-0.6.10.jar"/>
-	<classpathentry kind="lib" path="/usr/share/openjfx/lib/javafx.base.jar"/>
-	<classpathentry kind="lib" path="/usr/share/openjfx/lib/javafx.controls.jar"/>
-	<classpathentry kind="lib" path="/usr/share/openjfx/lib/javafx.fxml.jar"/>
-	<classpathentry kind="lib" path="/usr/share/openjfx/lib/javafx.graphics.jar"/>
-	<classpathentry kind="lib" path="/usr/share/openjfx/lib/javafx.media.jar"/>
-	<classpathentry kind="lib" path="/usr/share/openjfx/lib/javafx.swing.jar"/>
-	<classpathentry kind="lib" path="/usr/share/openjfx/lib/javafx.web.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre(1)">
+	<classpathentry kind="lib" path="C:/Users/Long Dang/git/UCSanDiego_DataStructure/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.base.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Long Dang/git/UCSanDiego_DataStructure/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.controls.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Long Dang/git/UCSanDiego_DataStructure/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.fxml.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Long Dang/git/UCSanDiego_DataStructure/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.graphics.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Long Dang/git/UCSanDiego_DataStructure/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.media.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Long Dang/git/UCSanDiego_DataStructure/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.swing.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Long Dang/git/UCSanDiego_DataStructure/openjfx-11.0.2_windows-x64_bin-sdk/javafx-sdk-11.0.2/lib/javafx.web.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_251">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
+		<accessrules>
+			<accessrule kind="accessible" pattern="javafx/**"/>
+		</accessrules>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
